@@ -99,14 +99,11 @@ export default function LoginPage() {
     setLoading(true);
     try {
       // TODO: substituir pela chamada real à API Spring Boot
-      // const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-      // const response = await authService.post(endpoint, { ...form });
-      // navigate('/dashboard');
+      const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
+      const response = await authService.post(endpoint, { ...form });
+      navigate('/dashboard');
 
-      // Simulação de loading
-      await new Promise(res => setTimeout(res, 1200));
-      setGlobalError('API ainda não conectada — integre com o back-end Spring Boot.');
-    } catch (err: any) {
+     } catch (err: any) {
       setGlobalError(err?.message ?? 'Algo deu errado. Tente novamente.');
     } finally {
       setLoading(false);
