@@ -1,0 +1,513 @@
+@use '../styles/variables' as *;
+
+// ============================================================
+// ReaderPage — Leitor imersivo de histórias
+// Direção estética: editorial de luxo + manuscrito antigo
+// ============================================================
+
+// ── Layout geral ─────────────────────────────────────────────
+
+.reader-page {
+  min-height: 100vh;
+  background: $color-bg-deep;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Barra superior (navbar do leitor) ────────────────────────
+
+.reader-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-md $space-xl;
+  background: rgba(13, 11, 15, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $color-border;
+  gap: $space-md;
+
+  @media (max-width: $bp-mobile) { padding: $space-sm $space-md; }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-family: $font-ui;
+    font-size: 0.82rem;
+    color: $color-text-muted;
+    transition: color $transition-fast;
+    flex-shrink: 0;
+
+    &:hover { color: $color-gold; }
+
+    svg { width: 16px; height: 16px; }
+  }
+
+  &__meta {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+
+    .story-title {
+      font-family: $font-display;
+      font-size: 0.78rem;
+      color: $color-text-muted;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chapter-title {
+      font-family: $font-body;
+      font-size: 0.9rem;
+      color: $color-text-secondary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    flex-shrink: 0;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: $radius-md;
+    color: $color-text-muted;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all $transition-fast;
+
+    &:hover {
+      color: $color-gold;
+      border-color: $color-border;
+      background: $color-bg-elevated;
+    }
+
+    &.active {
+      color: $color-gold;
+      background: $color-bg-elevated;
+      border-color: $color-border;
+    }
+
+    svg { width: 16px; height: 16px; }
+  }
+}
+
+// ── Barra de progresso de leitura ─────────────────────────────
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: $color-gold;
+  z-index: 200;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(201, 153, 74, 0.5);
+}
+
+// ── Wrapper do conteúdo ───────────────────────────────────────
+
+.reader-body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: $space-2xl $space-xl;
+
+  @media (max-width: $bp-mobile) { padding: $space-xl $space-md; }
+}
+
+.reader-content {
+  width: 100%;
+  max-width: 680px; // coluna de leitura confortável
+}
+
+// ── Cabeçalho do capítulo ─────────────────────────────────────
+
+.chapter-header {
+  margin-bottom: $space-2xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $color-border;
+  animation: fadeUp 0.5s ease both;
+
+  &__number {
+    font-family: $font-ui;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: $color-gold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: $space-sm;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 600;
+    color: $color-text-primary;
+    line-height: 1.15;
+    margin-bottom: $space-md;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    color: $color-text-muted;
+
+    span { display: flex; align-items: center; gap: 5px; }
+    svg  { width: 13px; height: 13px; }
+  }
+}
+
+// ── Imagem de IA (hero do capítulo) ───────────────────────────
+
+.chapter-ai-image {
+  width: 100%;
+  margin-bottom: $space-2xl;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  animation: fadeUp 0.5s 0.1s ease both;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  // Placeholder enquanto carrega
+  &--skeleton {
+    background: $color-bg-surface;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 2px solid $color-border;
+      border-top-color: $color-gold;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+// ── Texto do capítulo ─────────────────────────────────────────
+
+.chapter-text {
+  animation: fadeUp 0.5s 0.15s ease both;
+
+  p {
+    font-family: $font-body;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    line-height: 1.85;
+    color: $color-text-primary;
+    margin-bottom: 1.5em;
+    text-align: justify;
+    hyphens: auto;
+
+    // Primeira letra maiúscula decorativa (drop cap)
+    &:first-child::first-letter {
+      font-family: $font-display;
+      font-size: 3.8em;
+      font-weight: 700;
+      color: $color-gold;
+      float: left;
+      line-height: 0.75;
+      margin: 0.1em 0.12em 0 0;
+    }
+  }
+
+  // Imagens intermediárias (Fase 4 — posicionadas no meio do texto)
+  .inline-ai-image {
+    width: 100%;
+    margin: $space-2xl 0;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    border: 1px solid $color-border;
+
+    img { width: 100%; height: auto; display: block; }
+
+    figcaption {
+      padding: $space-sm $space-md;
+      background: $color-bg-surface;
+      font-family: $font-ui;
+      font-size: 0.78rem;
+      color: $color-text-muted;
+      font-style: italic;
+    }
+  }
+
+  // Modo de leitura claro
+  .reader-page.theme-light & {
+    p { color: #2a2015; }
+    p:first-child::first-letter { color: darken(#c9994a, 10%); }
+  }
+}
+
+// ── Temas de leitura ──────────────────────────────────────────
+
+.reader-page {
+  &.theme-light {
+    background: #f5f0e8;
+    .reader-nav {
+      background: rgba(245, 240, 232, 0.92);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    .chapter-header__title,
+    .chapter-header__number { color: #2a2015; }
+    .chapter-header__number { color: #9b6d25; }
+    .chapter-header__meta   { color: #8a7560; }
+  }
+
+  &.theme-sepia {
+    background: #1a1208;
+    .chapter-text p { color: #d4c4a0; }
+  }
+}
+
+// Tamanho da fonte (controlado por classe no body)
+.font-sm .chapter-text p { font-size: 0.95rem; }
+.font-lg .chapter-text p { font-size: 1.25rem; }
+
+// ── Divisor ornamental ────────────────────────────────────────
+
+.chapter-divider {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  margin: $space-2xl 0;
+  color: $color-gold-dim;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $color-border;
+  }
+
+  span {
+    font-family: $font-display;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+// ── Navegação entre capítulos ─────────────────────────────────
+
+.chapter-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-md;
+  margin-top: $space-2xl;
+  padding-top: $space-xl;
+  border-top: 1px solid $color-border;
+  animation: fadeUp 0.5s 0.2s ease both;
+
+  @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
+}
+
+.nav-chapter-btn {
+  display: flex;
+  flex-direction: column;
+  padding: $space-md $space-lg;
+  background: $color-bg-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  transition: all $transition-base;
+  text-align: left;
+
+  &--next { text-align: right; }
+
+  &:hover:not(:disabled) {
+    border-color: $color-border-strong;
+    background: $color-bg-elevated;
+    transform: translateY(-2px);
+    box-shadow: $shadow-card;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav-label {
+    font-family: $font-ui;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: $color-gold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .nav-chapter-btn--next & { justify-content: flex-end; }
+  }
+
+  .nav-title {
+    font-family: $font-body;
+    font-size: 0.9rem;
+    color: $color-text-secondary;
+    line-height: 1.3;
+  }
+}
+
+// ── Painel de configurações de leitura ────────────────────────
+
+.reader-settings {
+  position: fixed;
+  top: 64px;
+  right: $space-lg;
+  width: 240px;
+  background: $color-bg-overlay;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: $space-md;
+  z-index: 90;
+  box-shadow: $shadow-deep;
+  animation: fadeDown 0.2s ease;
+
+  h3 {
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: $color-text-muted;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: $space-md;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-md;
+    font-family: $font-ui;
+    font-size: 0.85rem;
+    color: $color-text-secondary;
+  }
+
+  &__themes {
+    display: flex;
+    gap: $space-sm;
+    margin-bottom: $space-md;
+  }
+
+  &__theme-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color $transition-fast, transform $transition-fast;
+
+    &.active { border-color: $color-gold; transform: scale(1.15); }
+    &--dark  { background: #0d0b0f; }
+    &--light { background: #f5f0e8; }
+    &--sepia { background: #1a1208; }
+  }
+
+  &__font-size {
+    display: flex;
+    gap: 6px;
+
+    button {
+      padding: 4px 10px;
+      border-radius: $radius-sm;
+      border: 1px solid $color-border;
+      background: transparent;
+      color: $color-text-secondary;
+      font-family: $font-ui;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all $transition-fast;
+
+      &.active, &:hover {
+        border-color: $color-gold;
+        color: $color-gold;
+        background: $color-bg-elevated;
+      }
+    }
+  }
+}
+
+// ── Loading skeleton ──────────────────────────────────────────
+
+.reader-skeleton {
+  animation: fadeIn 0.3s ease;
+
+  &__title {
+    height: 40px;
+    width: 70%;
+    background: $color-bg-elevated;
+    border-radius: $radius-md;
+    margin-bottom: $space-md;
+    animation: shimmer 1.5s infinite;
+  }
+
+  &__meta {
+    height: 16px;
+    width: 40%;
+    background: $color-bg-elevated;
+    border-radius: $radius-sm;
+    margin-bottom: $space-2xl;
+    animation: shimmer 1.5s 0.1s infinite;
+  }
+
+  &__line {
+    height: 14px;
+    background: $color-bg-elevated;
+    border-radius: $radius-sm;
+    margin-bottom: $space-sm;
+    animation: shimmer 1.5s 0.2s infinite;
+
+    &:nth-child(odd)  { width: 100%; }
+    &:nth-child(even) { width: 88%; }
+    &:last-child      { width: 60%; }
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

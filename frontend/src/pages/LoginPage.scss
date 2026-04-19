@@ -1,0 +1,321 @@
+@use '../styles/variables' as *;
+
+// ============================================================
+// LoginPage — Tela de autenticação
+// ============================================================
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
+  @media (max-width: $bp-tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- Painel esquerdo: arte / branding ---
+.login-art {
+  position: relative;
+  background: $color-bg-surface;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $space-2xl;
+  overflow: hidden;
+
+  @media (max-width: $bp-tablet) { display: none; }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 40%, rgba(201, 153, 74, 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 70% 70%, rgba(155, 44, 44, 0.10) 0%, transparent 60%);
+  }
+
+  &__rune {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    height: 380px;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    opacity: 0.4;
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border: 1px solid $color-border;
+      border-radius: 50%;
+    }
+    &::after { inset: 56px; border-style: dashed; }
+  }
+
+  &__quote {
+    position: relative;
+    z-index: 1;
+
+    blockquote {
+      font-family: $font-body;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: $color-text-secondary;
+      line-height: 1.6;
+      margin-bottom: $space-md;
+      
+      &::before {
+        content: '"';
+        font-family: $font-display;
+        font-size: 3rem;
+        color: $color-gold-dim;
+        line-height: 0;
+        vertical-align: -0.5em;
+        margin-right: 4px;
+      }
+    }
+
+    cite {
+      font-family: $font-ui;
+      font-size: 0.8rem;
+      font-style: normal;
+      color: $color-text-muted;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  }
+}
+
+// --- Painel direito: formulário ---
+.login-form-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $space-2xl $space-xl;
+  background: $color-bg-deep;
+
+  @media (max-width: $bp-mobile) {
+    padding: $space-xl $space-lg;
+  }
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-bottom: $space-2xl;
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid $color-gold;
+      border-radius: $radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: $font-display;
+      font-size: 1rem;
+      color: $color-gold;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .logo-name {
+      font-family: $font-display;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: $color-text-primary;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  &__heading {
+    margin-bottom: $space-sm;
+    
+    h1 {
+      font-size: 1.8rem;
+      color: $color-text-primary;
+    }
+  }
+
+  &__subheading {
+    font-family: $font-ui;
+    font-size: 0.9rem;
+    color: $color-text-secondary;
+    margin-bottom: $space-xl;
+  }
+}
+
+// --- Toggle Login / Cadastro ---
+.auth-toggle {
+  display: flex;
+  gap: 2px;
+  background: $color-bg-elevated;
+  border-radius: $radius-md;
+  padding: 3px;
+  margin-bottom: $space-xl;
+  border: 1px solid $color-border;
+
+  button {
+    flex: 1;
+    padding: $space-sm $space-md;
+    border-radius: calc($radius-md - 2px);
+    font-family: $font-ui;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: $color-text-muted;
+    transition: all $transition-base;
+
+    &.active {
+      background: $color-bg-overlay;
+      color: $color-gold;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+
+    &:hover:not(.active) { color: $color-text-secondary; }
+  }
+}
+
+// --- Campos do formulário ---
+.form-field {
+  margin-bottom: $space-md;
+
+  label {
+    display: block;
+    font-family: $font-ui;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: $color-text-secondary;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: $space-xs;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px $space-md;
+    background: $color-bg-elevated;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    color: $color-text-primary;
+    font-size: 0.95rem;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+    outline: none;
+
+    &::placeholder { color: $color-text-muted; }
+
+    &:focus {
+      border-color: $color-border-focus;
+      box-shadow: 0 0 0 3px rgba(201, 153, 74, 0.08);
+    }
+
+    &.error {
+      border-color: rgba(155, 44, 44, 0.7);
+      &:focus { box-shadow: 0 0 0 3px rgba(155, 44, 44, 0.10); }
+    }
+  }
+
+  .field-error {
+    margin-top: $space-xs;
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    color: #e06060;
+  }
+}
+
+// --- Botão primário ---
+.btn-primary {
+  width: 100%;
+  padding: 13px $space-md;
+  background: $color-gold;
+  color: #0d0b0f;
+  border-radius: $radius-md;
+  font-family: $font-ui;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: background $transition-fast, transform $transition-fast, box-shadow $transition-fast;
+  margin-top: $space-lg;
+
+  &:hover:not(:disabled) {
+    background: $color-gold-light;
+    box-shadow: $shadow-glow-gold;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: #0d0b0f;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: $space-sm;
+    vertical-align: middle;
+  }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// --- Divisor ---
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  margin: $space-lg 0;
+  font-family: $font-ui;
+  font-size: 0.78rem;
+  color: $color-text-muted;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $color-border;
+  }
+}
+
+// --- Mensagem de erro global ---
+.auth-error {
+  padding: $space-sm $space-md;
+  background: rgba(155, 44, 44, 0.12);
+  border: 1px solid rgba(155, 44, 44, 0.3);
+  border-radius: $radius-md;
+  font-family: $font-ui;
+  font-size: 0.85rem;
+  color: #e06060;
+  margin-bottom: $space-md;
+  animation: fadeIn 0.2s ease;
+}
+
+// --- Rodapé do form ---
+.login-footer {
+  margin-top: $space-xl;
+  text-align: center;
+  font-family: $font-ui;
+  font-size: 0.8rem;
+  color: $color-text-muted;
+
+  a {
+    color: $color-gold;
+    &:hover { color: $color-gold-light; }
+  }
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
