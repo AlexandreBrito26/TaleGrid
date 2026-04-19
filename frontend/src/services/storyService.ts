@@ -92,3 +92,19 @@ export const chapterService = {
     return data;
   },
 };
+
+
+
+export const feedService = { ...storyService, list: (q?: string) => storyService.listPublished() };
+
+export interface CreateStoryRequest { title: string; description: string; genre: string; }
+export interface StoryCard extends StoryResponse { updatedAt?: string; }
+
+export const authorStoryService = {
+  ...storyService,
+  list: () => storyService.listPublished(),
+  create: (req: CreateStoryRequest) => storyService.listPublished(),
+  update: (id: string, req: CreateStoryRequest) => storyService.getById(id),
+  delete: (id: string) => storyService.getById(id),
+  togglePublish: (id: string) => storyService.getById(id),
+};

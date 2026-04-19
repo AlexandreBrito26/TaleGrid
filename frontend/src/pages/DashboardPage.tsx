@@ -119,7 +119,7 @@ export default function DashboardPage() {
         setStories(s => s.map(x => x.id === updated.id ? updated : x));
       } else {
         const created = await authorStoryService.create(req);
-        setStories(s => [created, ...s]);
+        setStories((s: any) => [created, ...s]);
       }
       setModalOpen(false);
       setEditing(null);
