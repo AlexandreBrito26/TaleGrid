@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["maven", "jdk17"]
+
+[phases.build]
+cmds = ["cd backend && mvn clean package -DskipTests"]
+
+[start]
+cmd = "java -jar backend/target/talegrid-backend-1.0.0-SNAPSHOT.jar"
