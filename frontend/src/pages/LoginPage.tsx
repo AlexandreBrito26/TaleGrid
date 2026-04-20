@@ -99,9 +99,12 @@ export default function LoginPage() {
     setLoading(true);
     try {
       
-     const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-     const response = await authService.post(endpoint, { ...form });
-     navigate('/dashboard');
+     if (mode === 'login') {
+  await authService.login({ email: form.email, password: form.password });
+} else {
+  await authService.register({ name: form.name, email: form.email, password: form.password });
+}
+navigate('/dashboard');
       setGlobalError(err?.message ?? 'Algo deu errado. Tente novamente.');
     } finally {
       setLoading(false);
