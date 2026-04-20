@@ -98,12 +98,10 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      // TODO: substituir pela chamada real à API Spring Boot
-      const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-      const response = await authService.post(endpoint, { ...form });
-      navigate('/dashboard');
-
-     } catch (err: any) {
+      
+     const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
+     const response = await authService.post(endpoint, { ...form });
+     navigate('/dashboard');
       setGlobalError(err?.message ?? 'Algo deu errado. Tente novamente.');
     } finally {
       setLoading(false);
