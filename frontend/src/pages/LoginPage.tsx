@@ -1,3 +1,4 @@
+import { authService } from '../services/authService';
 import React, { useState } from 'react';
 import './LoginPage.scss';
 
