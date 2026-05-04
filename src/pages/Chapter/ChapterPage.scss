@@ -1,0 +1,139 @@
+@use '../../styles/variables' as *;
+
+.chapter-page {
+  min-height: 100vh;
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: $sp-2xl 0;
+  }
+
+  &__progress {
+    position: fixed;
+    top: 57px;
+    left: 0;
+    height: 2px;
+    background: $gold;
+    z-index: 100;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(201,153,74,0.5);
+  }
+
+  &__inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: $sp-xl $sp-xl $sp-2xl;
+
+    @media (max-width: $bp-tablet) { padding: $sp-lg $sp-md $sp-xl; }
+  }
+
+  &__back {
+    font-family: $font-ui;
+    font-size: 0.82rem;
+    color: $text-muted;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: $sp-xl;
+    transition: color $t-fast;
+
+    &:hover { color: $gold; }
+  }
+
+  &__header {
+    border-bottom: 1px solid $border;
+    padding-bottom: $sp-lg;
+    margin-bottom: $sp-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-sm;
+    animation: fadeDown 0.4s ease;
+  }
+
+  &__num {
+    font-family: $font-ui;
+    font-size: 0.75rem;
+    color: $gold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    color: $text-primary;
+    line-height: 1.2;
+  }
+
+  &__meta {
+    font-family: $font-ui;
+    font-size: 0.8rem;
+    color: $text-muted;
+  }
+
+  &__content {
+    font-family: $font-body;
+    font-size: 1.05rem;
+    color: $text-primary;
+    line-height: 1.85;
+    animation: fadeUp 0.4s ease 0.1s both;
+
+    p {
+      margin-bottom: 1.4em;
+      text-indent: 1.5em;
+
+      &:first-child { text-indent: 0; }
+    }
+  }
+
+  &__italic {
+    font-style: italic;
+    color: $text-secondary;
+    text-indent: 0 !important;
+    border-left: 2px solid $gold-dim;
+    padding-left: $sp-md;
+    margin-left: $sp-xs;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $sp-md;
+    border-top: 1px solid $border;
+    padding-top: $sp-xl;
+    margin-top: $sp-xl;
+    flex-wrap: wrap;
+  }
+
+  &__nav-btn {
+    font-family: $font-ui;
+    font-size: 0.84rem;
+    cursor: pointer;
+    border: 1px solid $border;
+    border-radius: $r-md;
+    padding: 8px $sp-md;
+    background: $bg-surface;
+    color: $text-secondary;
+    transition: all $t-fast;
+
+    &:hover {
+      border-color: $border-strong;
+      color: $text-primary;
+    }
+
+    &--next, &--prev {
+      color: $gold;
+      border-color: $border;
+
+      &:hover { border-color: $gold; background: rgba(201,153,74,0.08); }
+    }
+
+    &--index {
+      color: $text-muted;
+    }
+  }
+}

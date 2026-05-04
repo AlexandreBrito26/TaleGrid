@@ -1,0 +1,129 @@
+@use '../../styles/variables' as *;
+
+.story-editor {
+  min-height: 100vh;
+  padding: $sp-xl;
+
+  @media (max-width: $bp-tablet) { padding: $sp-lg $sp-md; }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: $sp-2xl 0;
+  }
+
+  &__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-lg;
+    animation: fadeUp 0.35s ease;
+  }
+
+  &__back {
+    font-family: $font-ui;
+    font-size: 0.82rem;
+    color: $text-muted;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color $t-fast;
+    align-self: flex-start;
+
+    &:hover { color: $gold; }
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.8rem;
+    color: $text-primary;
+  }
+
+  &__error {
+    background: rgba(155,44,44,0.15);
+    border: 1px solid rgba(155,44,44,0.4);
+    border-radius: $r-md;
+    padding: 10px $sp-md;
+    font-family: $font-ui;
+    font-size: 0.84rem;
+    color: #e87c7c;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-md;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-family: $font-ui;
+      font-size: 0.8rem;
+      color: $text-secondary;
+    }
+
+    input, select, textarea {
+      background: $bg-surface;
+      border: 1px solid $border;
+      border-radius: $r-md;
+      padding: 10px $sp-md;
+      color: $text-primary;
+      font-family: $font-ui;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color $t-fast;
+      resize: vertical;
+
+      &::placeholder { color: $text-muted; }
+      &:focus { border-color: $border-focus; }
+
+      option { background: $bg-elevated; }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $sp-sm;
+    justify-content: flex-end;
+    margin-top: $sp-xs;
+  }
+
+  &__cancel {
+    background: $bg-surface;
+    border: 1px solid $border;
+    border-radius: $r-md;
+    padding: 10px $sp-lg;
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $t-fast;
+
+    &:hover { border-color: $border-strong; color: $text-primary; }
+  }
+
+  &__submit {
+    background: $gold;
+    color: #0d0b0f;
+    border: none;
+    border-radius: $r-md;
+    padding: 10px $sp-lg;
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background $t-fast;
+    display: flex;
+    align-items: center;
+    gap: $sp-sm;
+
+    &:hover:not(:disabled) { background: $gold-light; }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+}

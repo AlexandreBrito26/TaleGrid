@@ -1,0 +1,63 @@
+@use './_variables' as *;
+
+// ── Reset e base ─────────────────────────────────────────────
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: $bg-deep;
+  color: $text-primary;
+  font-family: $font-body;
+  line-height: 1.7;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201, 153, 74, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(155, 44, 44, 0.04) 0%, transparent 60%);
+}
+
+a {
+  color: $gold;
+  text-decoration: none;
+  transition: color $t-fast;
+  &:hover { color: $gold-light; }
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-display;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $text-primary;
+}
+
+input, textarea, select, button { font-family: $font-ui; font-size: 1rem; }
+button { cursor: pointer; border: none; background: none; }
+img { max-width: 100%; display: block; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: $bg-deep; }
+::-webkit-scrollbar-thumb {
+  background: $gold-dim; border-radius: $r-full;
+  &:hover { background: $gold; }
+}
+
+::selection { background: rgba(201, 153, 74, 0.25); color: $gold-light; }
+
+// ── Utilitários ──────────────────────────────────────────────
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+// ── Animações globais ────────────────────────────────────────
+@keyframes spin       { to { transform: rotate(360deg); } }
+@keyframes shimmer    { 0%,100%{opacity:.4} 50%{opacity:.8} }
+@keyframes fadeIn     { from{opacity:0} to{opacity:1} }
+@keyframes fadeUp     { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+@keyframes fadeDown   { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:none} }
+@keyframes slideUp    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }

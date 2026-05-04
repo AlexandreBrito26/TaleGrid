@@ -1,0 +1,190 @@
+@use '../../styles/variables' as *;
+
+.dashboard {
+  min-height: 100vh;
+  padding: $sp-xl;
+
+  @media (max-width: $bp-tablet) { padding: $sp-lg $sp-md; }
+
+  &__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-xl;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $sp-md;
+    flex-wrap: wrap;
+    animation: fadeDown 0.35s ease;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.8rem;
+    color: $text-primary;
+  }
+
+  &__welcome {
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    color: $text-secondary;
+    margin-top: 4px;
+  }
+
+  &__new-btn {
+    background: $gold;
+    color: #0d0b0f;
+    border: none;
+    border-radius: $r-md;
+    padding: 10px $sp-lg;
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background $t-fast;
+    white-space: nowrap;
+
+    &:hover { background: $gold-light; }
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: $sp-2xl 0;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $sp-md;
+    padding: $sp-2xl 0;
+    color: $text-muted;
+    font-family: $font-ui;
+  }
+
+  &__empty-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-md;
+  }
+
+  &__story-card {
+    background: $bg-surface;
+    border: 1px solid $border;
+    border-radius: $r-lg;
+    padding: $sp-lg;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $sp-lg;
+    flex-wrap: wrap;
+    animation: fadeUp 0.35s ease;
+    transition: border-color $t-fast;
+
+    &:hover { border-color: $border-strong; }
+  }
+
+  &__story-info {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-xs;
+    flex: 1;
+  }
+
+  &__story-header {
+    display: flex;
+    align-items: center;
+    gap: $sp-sm;
+    flex-wrap: wrap;
+  }
+
+  &__story-title {
+    font-family: $font-display;
+    font-size: 1.05rem;
+    color: $text-primary;
+  }
+
+  &__badge {
+    font-family: $font-ui;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    padding: 2px 9px;
+    border-radius: $r-full;
+    border: 1px solid;
+
+    &--pub { color: #6fcf97; border-color: rgba(111,207,151,0.4); background: rgba(111,207,151,0.08); }
+    &--draft { color: $text-muted; border-color: $border; }
+  }
+
+  &__story-genre {
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    color: $gold;
+    opacity: 0.8;
+  }
+
+  &__story-stats {
+    display: flex;
+    align-items: center;
+    gap: $sp-xs;
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    color: $text-muted;
+  }
+
+  &__dot { opacity: 0.4; }
+
+  &__story-actions {
+    display: flex;
+    gap: $sp-xs;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__action-btn {
+    background: $bg-elevated;
+    border: 1px solid $border;
+    border-radius: $r-md;
+    padding: 7px 12px;
+    font-family: $font-ui;
+    font-size: 0.78rem;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all $t-fast;
+    display: flex;
+    align-items: center;
+    gap: $sp-xs;
+
+    &:hover { border-color: $border-strong; color: $text-primary; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    &--chapters {
+      color: $gold;
+      border-color: rgba(201,153,74,0.3);
+      &:hover { background: rgba(201,153,74,0.08); }
+    }
+
+    &--publish {
+      color: #6fcf97;
+      border-color: rgba(111,207,151,0.3);
+      &:hover { background: rgba(111,207,151,0.08); }
+    }
+
+    &--delete {
+      color: #e87c7c;
+      border-color: rgba(232,124,124,0.3);
+      &:hover { background: rgba(232,124,124,0.08); }
+    }
+  }
+}

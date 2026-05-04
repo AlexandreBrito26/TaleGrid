@@ -1,0 +1,62 @@
+// ============================================================
+// TaleGrid — Variáveis SASS
+// Paleta: âmbar/ouro sobre fundos muito escuros (roxo-carvão)
+// ============================================================
+
+// ── Cores de fundo ───────────────────────────────────────────
+$bg-deep:     #0d0b0f;
+$bg-surface:  #16121c;
+$bg-elevated: #1f1929;
+$bg-overlay:  #251e32;
+
+// ── Destaque ─────────────────────────────────────────────────
+$gold:        #c9994a;
+$gold-light:  #e8bf7a;
+$gold-dim:    #7a5c28;
+$crimson:     #9b2c2c;
+
+// ── Texto ────────────────────────────────────────────────────
+$text-primary:   #f0ead8;
+$text-secondary: #9c9080;
+$text-muted:     #5a5248;
+
+// ── Bordas ───────────────────────────────────────────────────
+$border:       rgba(201, 153, 74, 0.18);
+$border-strong:rgba(201, 153, 74, 0.40);
+$border-focus: rgba(201, 153, 74, 0.70);
+
+// ── Tipografia ───────────────────────────────────────────────
+$font-display: 'Cinzel', serif;
+$font-body:    'Lora', serif;
+$font-ui:      'DM Sans', sans-serif;
+
+// ── Espaçamento ──────────────────────────────────────────────
+$sp-xs:  4px;
+$sp-sm:  8px;
+$sp-md:  16px;
+$sp-lg:  24px;
+$sp-xl:  40px;
+$sp-2xl: 64px;
+
+// ── Raios ────────────────────────────────────────────────────
+$r-sm:   4px;
+$r-md:   8px;
+$r-lg:   14px;
+$r-xl:   24px;
+$r-full: 9999px;
+
+// ── Sombras ──────────────────────────────────────────────────
+$shadow-glow: 0 0 32px rgba(201, 153, 74, 0.18);
+$shadow-card: 0 4px 32px rgba(0, 0, 0, 0.50);
+$shadow-deep: 0 8px 64px rgba(0, 0, 0, 0.70);
+
+// ── Transições ───────────────────────────────────────────────
+$t-fast: 150ms ease;
+$t-base: 250ms ease;
+$t-slow: 400ms ease;
+
+// ── Breakpoints ──────────────────────────────────────────────
+$bp-mobile:  480px;
+$bp-tablet:  768px;
+$bp-desktop: 1024px;
+$bp-wide:    1440px;

@@ -1,0 +1,209 @@
+@use '../../styles/variables' as *;
+
+.story-detail {
+  min-height: 100vh;
+  padding: $sp-xl $sp-xl;
+
+  @media (max-width: $bp-tablet) { padding: $sp-lg $sp-md; }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: $sp-2xl 0;
+  }
+
+  &__inner {
+    max-width: 840px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-xl;
+  }
+
+  &__header {
+    display: flex;
+    gap: $sp-xl;
+    animation: fadeUp 0.4s ease;
+
+    @media (max-width: $bp-tablet) { flex-direction: column; gap: $sp-lg; }
+  }
+
+  &__cover-placeholder {
+    flex-shrink: 0;
+    width: 180px;
+    height: 240px;
+    background: linear-gradient(135deg, $bg-elevated 0%, $bg-overlay 100%);
+    border: 1px solid $border;
+    border-radius: $r-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: $gold-dim;
+
+    @media (max-width: $bp-tablet) { width: 100%; height: 160px; }
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-sm;
+    flex: 1;
+  }
+
+  &__genre {
+    display: inline-block;
+    background: rgba(201,153,74,0.1);
+    border: 1px solid $border;
+    border-radius: $r-full;
+    padding: 3px 12px;
+    font-family: $font-ui;
+    font-size: 0.75rem;
+    color: $gold;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: $text-primary;
+    line-height: 1.2;
+  }
+
+  &__author {
+    font-family: $font-ui;
+    font-size: 0.9rem;
+    color: $text-secondary;
+
+    strong { color: $gold; }
+  }
+
+  &__stats {
+    display: flex;
+    align-items: center;
+    gap: $sp-xs;
+    font-family: $font-ui;
+    font-size: 0.8rem;
+    color: $text-muted;
+    flex-wrap: wrap;
+  }
+
+  &__dot { opacity: 0.4; }
+
+  &__desc {
+    font-size: 0.95rem;
+    color: $text-secondary;
+    line-height: 1.7;
+    margin-top: $sp-xs;
+  }
+
+  &__start-btn {
+    align-self: flex-start;
+    background: $gold;
+    color: #0d0b0f;
+    border: none;
+    border-radius: $r-md;
+    padding: 10px $sp-lg;
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background $t-fast;
+    margin-top: $sp-xs;
+
+    &:hover { background: $gold-light; }
+  }
+
+  // ── Chapters ─────────────────────────────────────────────
+  &__chapters {
+    border-top: 1px solid $border;
+    padding-top: $sp-xl;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  &__chapters-title {
+    font-family: $font-display;
+    font-size: 1.1rem;
+    color: $text-primary;
+    margin-bottom: $sp-md;
+  }
+
+  &__no-chapters {
+    font-family: $font-ui;
+    font-size: 0.875rem;
+    color: $text-muted;
+  }
+
+  &__chapter-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-xs;
+  }
+
+  &__chapter-item {
+    display: flex;
+    align-items: center;
+    gap: $sp-md;
+    background: $bg-surface;
+    border: 1px solid $border;
+    border-radius: $r-md;
+    padding: $sp-md;
+    cursor: pointer;
+    transition: border-color $t-fast, background $t-fast;
+
+    &:hover {
+      border-color: $border-strong;
+      background: $bg-elevated;
+    }
+  }
+
+  &__chapter-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: rgba(201,153,74,0.1);
+    border: 1px solid $border;
+    border-radius: $r-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-ui;
+    font-size: 0.75rem;
+    color: $gold;
+    font-weight: 500;
+  }
+
+  &__chapter-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__chapter-name {
+    font-family: $font-ui;
+    font-size: 0.9rem;
+    color: $text-primary;
+    font-weight: 500;
+  }
+
+  &__chapter-meta {
+    font-family: $font-ui;
+    font-size: 0.76rem;
+    color: $text-muted;
+  }
+
+  &__chapter-arrow {
+    color: $text-muted;
+    font-size: 0.9rem;
+    transition: color $t-fast, transform $t-fast;
+  }
+
+  &__chapter-item:hover &__chapter-arrow {
+    color: $gold;
+    transform: translateX(3px);
+  }
+}
